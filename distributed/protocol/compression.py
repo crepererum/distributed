@@ -12,7 +12,7 @@ from toolz import identity, partial
 try:
     import blosc
 
-    n = blosc.set_nthreads(2)
+    blosc.set_nthreads(2)
     if hasattr("blosc", "releasegil"):
         blosc.set_releasegil(True)
 except ImportError:
@@ -99,6 +99,19 @@ with ignoring(ImportError):
     compressions["blosc"] = {
         "compress": partial(blosc.compress, clevel=5, cname="lz4"),
         "decompress": blosc.decompress,
+    }
+
+with ignoring(ImportError):
+    import zstandard
+
+    _zstandard_level = dask.config.get("distributed.comm.zstandard_level")
+
+    _zstandard_compressor = zstandard.ZstdCompressor(level=_zstandard_level, threads=2)
+    _zstandard_decompressor = zstandard.ZstdDecompressor()
+
+    compressions["zstandard"] = {
+        "compress": _zstandard_compressor.compress,
+        "decompress": _zstandard_decompressor.decompress,
     }
 
 

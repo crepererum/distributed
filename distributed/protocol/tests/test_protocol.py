@@ -61,7 +61,7 @@ def test_maybe_compress():
     pass
 
     try_converters = [bytes, memoryview]
-    try_compressions = ["zlib", "lz4"]
+    try_compressions = ["zlib", "lz4", "zstandard", "snappy"]
 
     payload = b"123"
 

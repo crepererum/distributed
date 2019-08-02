@@ -28,6 +28,7 @@ source activate test-environment
 
 # Install dependencies
 conda install -q \
+    blosc \
     bokeh \
     click \
     coverage \
@@ -39,6 +40,7 @@ conda install -q \
     ipywidgets \
     joblib \
     jupyter_client \
+    lz4 \
     mock \
     netcdf4 \
     paramiko \
@@ -47,11 +49,13 @@ conda install -q \
     pytest>=4 \
     pytest-timeout \
     python=$PYTHON \
+    python-snappy \
     requests \
     scipy \
     tblib \
     toolz \
     tornado=$TORNADO \
+    zstandard \
     $PACKAGES
 
 # For low-level profiler, install libunwind and stacktrace from conda-forge
@@ -68,7 +72,7 @@ pip install -q git+https://github.com/dask/s3fs.git --upgrade --no-deps
 pip install -q git+https://github.com/dask/zict.git --upgrade --no-deps
 pip install -q sortedcollections msgpack --no-deps
 pip install -q keras --upgrade --no-deps
-pip install -q asyncssh 
+pip install -q asyncssh
 
 if [[ $CRICK == true ]]; then
     conda install -q cython
